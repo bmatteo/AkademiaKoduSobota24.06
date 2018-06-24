@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Pogodziak</title>
+</head>
+<body>
+<center>
+    <h2>Pogodziak</h2>
+    <h5>Sprawdź pogodę gdziekolwiek  na świecie jesteś</h5><br>
+
+    <div style="text-align: center;">
+        <form method="post" action="/">
+            <input type="text" placeholder="Wpisz miasto" name="city">
+            <input type="submit" value="Pokaż pogodę">
+        </form>
+    </div><br><br>
+
+    <div>
+
+    </div>
+
+    <div th:if="${city} != null">
+        <table style="text-align: left; border: black; border-style: solid">
+            <tr>
+                <td>Miasto: </td>
+                <td><span th:text="${city}"></span></td>
+            </tr>
+            <tr>
+                <td>Kraj: </td>
+                <td><span th:text="${country}"></span></td>
+            </tr>
+            <tr>
+                <td>Temperatura w cieniu: </td>
+                <td><span th:text="${temperature}"></span></td>
+            </tr>
+            <tr>
+                <td>Ciśnienie powietrza: </td>
+                <td><span th:text="${pressure}"></span></td>
+            </tr>
+            <tr>
+                <td>Wilgotność powietrza: </td>
+                <td><span th:text="${humidity}"></span></td>
+            </tr>
+            <tr>
+                <td>Zachmurzenie: </td>
+                <td><span th:text="${cloudiness}"></span></td>
+            </tr>
+            <tr>
+                <td>Wschód słońca: </td>
+                <td><span th:text="${sunrise}"></span></td>
+            </tr>
+            <tr>
+                <td>Zachód słońca: </td>
+                <td><span th:text="${sunset}"></span></td>
+            </tr>
+        </table><br>
+        Uwaga! Podany czas wschodu i zachodu słońca zawsze jest zgodny ze strefą czasową Polski (UTC + 01:00)
+    </div>
+</center>
+</body>
+</html>
