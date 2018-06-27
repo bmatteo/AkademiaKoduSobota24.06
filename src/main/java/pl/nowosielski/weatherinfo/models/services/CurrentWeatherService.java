@@ -1,8 +1,11 @@
 package pl.nowosielski.weatherinfo.models.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.nowosielski.weatherinfo.ApplicationConfiguration;
+import pl.nowosielski.weatherinfo.models.ApplicationPropertiesBean;
 import pl.nowosielski.weatherinfo.models.weather.current.WeatherModel;
 
 import java.util.Date;
@@ -10,17 +13,29 @@ import java.util.Date;
 @Service
 public class CurrentWeatherService {
 
-    @Value("${openweathermap.api_key}")
-    private String apiKey;
+    //@Value("${openweathermap.api_key}")
+    //private String apiKey;
 
     private RestTemplate restTemplate;
+
+    @Autowired
+    private ApplicationPropertiesBean applicationPropertiesBean;
 
     public CurrentWeatherService(){
         restTemplate = new RestTemplate();
     }
 
     public WeatherModel makeCall(String city) {
-        return restTemplate.getForObject("http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+apiKey, WeatherModel.class);
+
+        String apiKey = applicationPropertiesBean.properties.get(applicationPropertiesBean.API_KEY);
+        String URL = applicationPropertiesBean.properties.get(applicationPropertiesBean.API_URL);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(URL);
+        sb.append("?q="+city);
+        sb.append("&appid="+apiKey);
+
+        return restTemplate.getForObject(sb.toString(), WeatherModel.class);
     }
 
     public String cityFormat(WeatherModel weatherModel) {
